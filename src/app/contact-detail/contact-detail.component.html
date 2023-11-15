@@ -1,0 +1,28 @@
+<mat-card call="card">
+  <mat-card-title>Detalle del contacto</mat-card-title>
+  <mat-card-content class="card-content">
+    <p>
+        <mat-icon>person</mat-icon> <strong>Nombre:</strong> {{contact.name}}
+    </p>
+    <p>
+      <mat-icon>person</mat-icon> <strong>Primer Apellido:</strong> {{contact.apellido_1}}
+  </p>
+  <p>
+    <mat-icon>person</mat-icon> <strong>Segundo Apellido:</strong> {{contact.apellido_2}}
+</p>
+<p>
+  <mat-icon>email</mat-icon> <strong>Email:</strong> {{contact.email}}
+</p>
+<p>
+  <mat-icon>phone</mat-icon> <strong>Nombre:</strong> {{contact.telefono}}
+</p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button type="button" (click)="editContact()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-raised-button type="button" color="warn" (click)="closeContact()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
