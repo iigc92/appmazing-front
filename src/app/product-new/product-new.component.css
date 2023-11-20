@@ -21,3 +21,11 @@ mat-radio-button ~ mat-radio-button {
   margin-left: 16px;
   margin-bottom: 20px;
 }
+
+input:invalid {
+  border: 2px dashed red;
+}
+
+input:invalid:required {
+  background-image: linear-gradient(to right, pink, lightgreen);
+}

@@ -16,8 +16,10 @@ form{
   margin-left:1%;
 }
 
-mat-radio-button ~ mat-radio-button {
+mat-radio-button {
   margin-top: 10px;
   margin-left: 16px;
   margin-bottom: 20px;
 }
+
+

@@ -30,9 +30,24 @@ export class ProductNewComponent implements OnInit {
       stock: this.product.stock,
       price: this.product.price,
       active: this.product.active,
-      date_added: new Date,
+      date_added: new Date(),
       category: this.category
     }
+
+    // let values = Object.values(product);
+    
+    // for(let i=0;i<values.length; i++){
+    //   console.log(values[i]);
+    //   if(values[i]==null || Object.keys(Category).length==0){
+    //     do{
+    //       alert("Quedan campos por cumplimentar");
+    //       break;
+    //     }while(values[i]==null || Object.keys(Category).length==0)
+    //   }
+
+    // }
+    
+
     this.productsService.newProduct(product);
     this.navigateToHome();
   }

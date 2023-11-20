@@ -44,6 +44,9 @@
       <button mat-icon-button color = "primary" (click)="editContactDetail(contacto.id); $event.stopPropagation()">
         <mat-icon>edit</mat-icon>
       </button>
+      <button mat-icon-button color = "warn" (click)="openDeleteDialog(contacto.id); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 

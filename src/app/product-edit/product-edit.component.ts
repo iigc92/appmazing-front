@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { CategoryService } from '../category.service';
 import { Category } from '../model/Category';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-edit',
@@ -14,7 +15,7 @@ export class ProductEditComponent implements OnInit {
   product: any;
   category: any;
   
-  constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router,  private categoryService: CategoryService) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router,  private categoryService: CategoryService, private datepipe: DatePipe) { }
 
   ngOnInit() {
     this.categoryService.getCategory().subscribe(data =>{
@@ -24,17 +25,15 @@ export class ProductEditComponent implements OnInit {
     this.productService.getProduct(this.route.snapshot.params['id']).subscribe(data =>{
       this.product = data;
 
-      this.product.date_added=fechaISOToEsp(this.product.date_added);
+      this.product.date_added = this.datepipe.transform(this.product.date_added, 'yyyy-MM-dd');
       
       if(!this.product.category){ 
         this.product.category = new Category();
       }
     });
-   
   }
 
   updateProduct(){
-    this.product.date_added= fechaEspToISO(this.product.date_added);
     this.productService.updateProduct(this.product);
     this.navigateDetail();
   }
@@ -47,21 +46,4 @@ export class ProductEditComponent implements OnInit {
     this.router.navigate(['/product', this.route.snapshot.params['id']]);
   }
 
-}
-
-function fechaISOToEsp(fec:string): string{
-  let f = fec.split('-');
-  let anio = f[0];
-  let mes = f[1];
-  let d = f[2].split('T');
-  let dia = d[0];
-  return dia + '/' + mes + '/' + anio;
-}
-
-function fechaEspToISO(fecISO:string): string{
-  let f = fecISO.split('/');
-  let pdia = f[0];
-  let pmes = f[1];
-  let panio = f[2];
-  return panio + '-' + pmes + '-' + pdia + 'T23:00:00.000+00:00' 
 }
