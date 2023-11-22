@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContactsService } from '../contacts.service';
-import { range } from 'rxjs';
 import { ProductService } from '../product.service';
 import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css']
+  styleUrls: ['./charts.component.css'],
+  encapsulation: ViewEncapsulation.None //para sobreescribir estilos del angular mat
 })
 export class ChartsComponent implements OnInit {
   initialLetter = [];
@@ -18,7 +18,7 @@ export class ChartsComponent implements OnInit {
   valuePerCategories = {};
   theBig5 = {};
   prodSameLenCat = {};
-  productNewYears = {};
+  productsYear = {};
 
   constructor(private contactsService: ContactsService, private productsService: ProductService, private categoryService: CategoryService) { }
 
@@ -35,7 +35,7 @@ export class ChartsComponent implements OnInit {
         this.valuePerCategories = this.calculateCuantityProductsInCategory(data,data2);
         this.theBig5 = this.fiveElemBigStock(data);
         this.prodSameLenCat = this.calculateProdSameLenCat(data,data2);
-        this.productNewYears = this. calculateProductPerYears(data, data2);
+        this.productsYear = this. calculateProductPerYears(data);
       })
     })
   }
@@ -127,25 +127,35 @@ export class ChartsComponent implements OnInit {
 
   calculateCuantityProductsInCategory(products,category: any[]): any{
     const total = [];
+    const total2 = [];
     var categoryData = []; //array de objetos
     var newCategory = {};
     
       for(let i=0;i<category.length;i++){
         total[i]=0;
+        total2[i]=0;
         for(let j=0;j<products.length;j++){
           if(products[j].category.name == category[i].name){
             total[i]+=(products[j].stock * products[j].price);
+            total2[i]+=products[j].stock;
           }
         }
-        total.push(total[i]);
-        addCategory(category[i].name,total[i]);
+        addCategory(category[i].name,"price",total[i],"stock",total2[i]);
       }
     
-    function addCategory(name, value){
+    function addCategory(name, price, value, stock, value2){
       newCategory = {
         "name": name,
-        "value": value
-      }
+        "series": [{
+          "name": price,
+          "value": value
+        },
+        {
+          "name": stock,
+          "value": value2
+        }]
+     
+      } 
       categoryData.push(newCategory);
     }
 
@@ -158,8 +168,6 @@ export class ChartsComponent implements OnInit {
     let newElement = {};
 
     products.sort((a,b) => b.stock - a.stock);
-
-    console.log(products)
 
     for(let i=0;i<limit;i++){
       products[i];
@@ -220,25 +228,35 @@ export class ChartsComponent implements OnInit {
     return prodLenCat;
   }
 
-  calculateProductPerYears(product, category: any[]): any{
-    let newSerie = {};
-    let newYearCuant = [];
-    let newSerieCuant = [];
+  calculateProductPerYears(products: any[]): any{
+    products.sort((a, b) => b.price - a.price);
+    var expensivestProducts = [];
+    var newProduct = {};
 
-    function addSeries(name, value){
-      newSerie = {
-        "name": name,
-        "value": value
-      }
-      newYearCuant.push(newSerie);
+    let x = 10;
+    for (let i = 0; i < x; i++) {
+      var expresionRegular = /\d{4}/;
 
+      addProduct(
+        products[i].name,
+        products[i].price,
+        products[i].date_added.match(expresionRegular)[0]
+      );
     }
 
-    function addNameSeries(name, newSerie){
-      
-
+    function addProduct(name, price, date) {
+      newProduct = {
+        name: name,
+        series: [
+          {
+            name: date,
+            value: price,
+          },
+        ],
+      };
+      expensivestProducts.push(newProduct);
     }
-
+    return expensivestProducts;
   }
 
 }

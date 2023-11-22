@@ -8,3 +8,19 @@
   justify-content: space-around;
   align-items:center;
 }
+
+ul.legend-labels.horizontal-legend{
+  display: flex;
+  justify-content: center;
+  
+}
+
+.legend-title.ng-star-inserted{
+  display: none;
+}
+
+.chart-legend  ul.legend-labels{
+  background-color: white;
+}
+
+

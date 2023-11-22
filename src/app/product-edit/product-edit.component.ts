@@ -4,6 +4,7 @@ import { ProductService } from '../product.service';
 import { CategoryService } from '../category.service';
 import { Category } from '../model/Category';
 import { DatePipe } from '@angular/common';
+import * as FormMax from '../form-max';
 
 @Component({
   selector: 'app-product-edit',
@@ -32,6 +33,8 @@ export class ProductEditComponent implements OnInit {
       }
     });
   }
+
+  onKeyUp = FormMax.onKeyUp
 
   updateProduct(){
     this.productService.updateProduct(this.product);

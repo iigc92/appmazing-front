@@ -46,8 +46,14 @@
     <div class="chart-row">
       <div>
         <p><strong>Price per category</strong></p>
-        <ngx-charts-pie-grid  [view]="[400,300]" [results]="valuePerCategories">
-        </ngx-charts-pie-grid>
+        <ngx-charts-bar-vertical-2d  [view]="[400,300]" [legend]="true" [legendPosition]="'below'"
+        [results]="valuePerCategories" [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        xAxisLabel="categorias"
+        yAxisLabel="productos">
+        </ngx-charts-bar-vertical-2d>
       </div>
       <div>
         <p><strong>Five Elements with greatest Stock</strong></p>
@@ -58,15 +64,15 @@
     </div>
     <div class="chart-row">
       <div>
-        <p><strong>Product same Lenght Category</strong></p>
+        <p><strong>Product Price by Data</strong></p>
         <ngx-charts-bar-horizontal [view]=[400,300] [results]="prodSameLenCat" [xAxis]="true" [yAxis]="true" [legend]="false" 
         [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Cuantity of Products with same Length" yAxisLabel="Categories">
         </ngx-charts-bar-horizontal>
       </div>
       <div>
         <p><strong>Prefix</strong></p>
-        <ngx-charts-bar-horizontal-stacked [view]="[400, 300]" [results] = "productNewYears" [xAxis]="true" [yAxis]="true"
-        [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Number of Product" yAxisLabel="Categories">
+        <ngx-charts-bar-horizontal-stacked [view]="[400, 300]" [legend]="true" [legendPosition]="'below'" [results] = "productsYear" [xAxis]="true" [yAxis]="true"
+        [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="prices" yAxisLabel="Products">
         </ngx-charts-bar-horizontal-stacked>
       </div>
     </div>

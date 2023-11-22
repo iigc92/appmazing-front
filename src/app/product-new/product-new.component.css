@@ -22,10 +22,10 @@ mat-radio-button ~ mat-radio-button {
   margin-bottom: 20px;
 }
 
-input:invalid {
+/* input:invalid {
   border: 2px dashed red;
 }
 
 input:invalid:required {
   background-image: linear-gradient(to right, pink, lightgreen);
-}
+} */

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../category.service';
 import { Category } from '../model/Category';
 import { Product } from '../model/Product';
+import * as FormMax from '../form-max'; //metodo en fichero externo
 
 @Component({
   selector: 'app-product-new',
@@ -24,6 +25,8 @@ export class ProductNewComponent implements OnInit {
     });
   }
 
+  onKeyUp = FormMax.onKeyUp; //llamada a metodo en fichero externo
+ 
   newProduct(){
     const product = {
       name: this.product.name,
@@ -36,18 +39,6 @@ export class ProductNewComponent implements OnInit {
 
     // let values = Object.values(product);
     
-    // for(let i=0;i<values.length; i++){
-    //   console.log(values[i]);
-    //   if(values[i]==null || Object.keys(Category).length==0){
-    //     do{
-    //       alert("Quedan campos por cumplimentar");
-    //       break;
-    //     }while(values[i]==null || Object.keys(Category).length==0)
-    //   }
-
-    // }
-    
-
     this.productsService.newProduct(product);
     this.navigateToHome();
   }
