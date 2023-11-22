@@ -19,6 +19,7 @@ export class ChartsComponent implements OnInit {
   theBig5 = {};
   prodSameLenCat = {};
   productsYear = {};
+  contact: any;
 
   constructor(private contactsService: ContactsService, private productsService: ProductService, private categoryService: CategoryService) { }
 
@@ -28,6 +29,10 @@ export class ChartsComponent implements OnInit {
       this.contactsByFullName = this.calculateContactsByFullNameData(data);
       this.emailExtension = this.calculateEmailExtensionsData(data);
       this.phonePrefixData = this.generatePhonePrefixData(data);
+
+      if(!this.contact.apellido_2){ 
+        this.contact.apellido_2 = "";
+      }
     })
     
     this.productsService.getProducts().subscribe(data =>{
@@ -107,7 +112,12 @@ export class ChartsComponent implements OnInit {
     let phonePrefixData = [];
     let prefixCounts = {}; //crea objeto
     contacts.forEach(contact =>{
-      const phonePrefix = contact.telefono.substring(0,1);
+      let positionEndPref = contact.telefono.search(/\s/);
+      var phonePrefix = contact.telefono.substring(0,positionEndPref);
+      if(phonePrefix == "+"){
+        var phonePrefix = contact.telefono.substring(1,positionEndPref);
+      }
+
       if(prefixCounts[phonePrefix]){
         prefixCounts[phonePrefix]++;
       }else{
@@ -246,17 +256,14 @@ export class ChartsComponent implements OnInit {
 
     function addProduct(name, price, date) {
       newProduct = {
-        name: name,
-        series: [
-          {
-            name: date,
-            value: price,
-          },
-        ],
+        "name": name,
+        "series": [{
+            "name": date,
+            "value": price,
+          }]
       };
       expensivestProducts.push(newProduct);
     }
     return expensivestProducts;
   }
-
 }

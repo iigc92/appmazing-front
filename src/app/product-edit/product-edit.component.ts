@@ -28,9 +28,9 @@ export class ProductEditComponent implements OnInit {
 
       this.product.date_added = this.datepipe.transform(this.product.date_added, 'yyyy-MM-dd');
       
-      if(!this.product.category){ 
-        this.product.category = new Category();
-      }
+      // if(!this.product.category){ 
+      //   this.product.category = new Category();
+      // }
     });
   }
 
